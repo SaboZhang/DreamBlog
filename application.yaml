@@ -9,9 +9,6 @@ server:
   iplimitCount: 15000
   #  IP限制一个小时
   iplimitTime: 3600
-# 用户登录配置
-login:
-  secret: mz@899*Peu5FcuczB#EpFcULa*@gTNL*Yk6ozY9KynNTt9RXFHXZx6TTo4$BRP8#
 # MySQL数据库配置
 connection:
   host: 127.0.0.1
@@ -65,8 +62,8 @@ recaptchaSettings:
   enabled: true
   headerKey: Google-RecaptchaToken
   minimumScore: 0.5
-  siteKey: 6Lf6S-EdAAAAAIalVX0Q8jwRpbaNTnRZdPJKma9k
-  siteSecret: 6Lf6S-EdAAAAAOnUQvjskB7OkuklDe--BlwTtgNs
+  siteKey:
+  siteSecret:
   verifyBaseUrl: https://www.recaptcha.net
 # 普通验证码配置
 captcha:
