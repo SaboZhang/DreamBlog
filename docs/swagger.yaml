@@ -1,0 +1,145 @@
+definitions:
+  request.Login:
+    properties:
+      captcha:
+        description: 验证码
+        type: string
+      captchaId:
+        description: 验证码ID
+        type: string
+      email:
+        description: 邮箱
+        type: string
+      password:
+        description: 密码
+        type: string
+      username:
+        description: 用户名
+        type: string
+    required:
+    - password
+    type: object
+  request.Register:
+    properties:
+      email:
+        description: 邮箱
+        type: string
+      nickname:
+        description: 昵称
+        type: string
+      password:
+        description: 密码
+        type: string
+      username:
+        description: 用户名
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+  response.LoginResponse:
+    properties:
+      access_token:
+        type: string
+      expiresAt:
+        type: integer
+      refresh_token:
+        type: string
+    type: object
+  response.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+  response.SysCaptchaResponse:
+    properties:
+      captchaId:
+        type: string
+      captchaLength:
+        type: integer
+      picPath:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /base/captcha:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 生成验证码,返回包括随机数id,base64,验证码长度
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.SysCaptchaResponse'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取验证码
+      tags:
+      - Account
+  /user/login:
+    post:
+      parameters:
+      - description: 用户名, 密码, 邮箱
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回包括用户信息,token,过期时间
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.LoginResponse'
+                msg:
+                  type: string
+              type: object
+      summary: 用户登陆
+      tags:
+      - Account
+  /user/register:
+    post:
+      parameters:
+      - description: 用户名, 密码, 邮箱, 昵称 /base/admin_register || /user/register admin_register需要进行鉴权
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Register'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 账号注册成功信息
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 用户注册
+      tags:
+      - Account
+swagger: "2.0"

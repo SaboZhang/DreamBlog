@@ -1,0 +1,91 @@
+# 服务器运行配置项
+server:
+  port: 9000
+  env: 'develop'  # Change to "develop" to skip authentication for development mode
+  ossType: 'local'    # 控制oss选择走本地还是 七牛等其他仓 自行增加其他oss仓可以在 server/utils/upload/upload.go 中 NewOss函数配置
+  useRedis: false     # 使用redis
+  useMultipoint: false
+  # IP限制次数 一个小时15000次
+  iplimitCount: 15000
+  #  IP限制一个小时
+  iplimitTime: 3600
+# 用户登录配置
+login:
+  secret: mz@899*Peu5FcuczB#EpFcULa*@gTNL*Yk6ozY9KynNTt9RXFHXZx6TTo4$BRP8#
+# MySQL数据库配置
+connection:
+  host: 127.0.0.1
+  port: 3306
+  config: 'parseTime=True'
+  dbName: go
+  username: root
+  password: admin123
+  maxIdleConns: 10
+  maxOpenConns: 100
+  logMode: false
+  logZap: false
+# zap logger配置
+zap:
+  level: 'info'
+  format: 'console'
+  prefix: '[DreamBlog/server]'
+  director: 'logs'
+  showLine: true
+  encodeLevel: 'LowercaseColorLevelEncoder'
+  stacktraceKey: 'stacktrace'
+  logInConsole: true
+# JWT配置
+jwt:
+  signingKey: mz@899*Peu5FcuczB#EpFcULa*@gTNL*Yk6ozY9KynNTt9RXFHXZx6TTo4$BRP8#
+  expiresTime: 604800
+  bufferTime: 86400
+  issuer: DreamBlog
+
+# 文件存储配置
+storage:
+  host: https://image.luckyits.com
+  prefixPath: 'assets'
+
+# casbin配置
+casbin:
+  modelPath: './resource/casbin.conf'
+
+# qiniu configuration
+qiniu:
+  zone: 'ZoneHuaDong'
+  bucket: ''
+  imgPath: ''
+  useHttps: false
+  accessKey: ''
+  secretKey: ''
+  useCdnDomains: false
+
+# recaptcha 配置
+recaptchaSettings:
+  enabled: true
+  headerKey: Google-RecaptchaToken
+  minimumScore: 0.5
+  siteKey: 6Lf6S-EdAAAAAIalVX0Q8jwRpbaNTnRZdPJKma9k
+  siteSecret: 6Lf6S-EdAAAAAOnUQvjskB7OkuklDe--BlwTtgNs
+  verifyBaseUrl: https://www.recaptcha.net
+# 普通验证码配置
+captcha:
+  keyLong: 4
+  imgWidth: 240
+  imgHeight: 80
+  enable: true
+# 跨域配置
+# 需要配合 initialize/router.go#L31 使用
+cors:
+  mode: whitelist # 放行模式: allow-all, 放行全部; whitelist, 白名单模式, 来自白名单内域名的请求添加 cors 头; strict-whitelist 严格白名单模式, 白名单外的请求一律拒绝
+  whitelist:
+    - allowOrigin: example1.com
+      allowHeaders: content-type
+      allowMethods: GET, POST
+      exposeHeaders: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
+      allowCredentials: true # 布尔值
+    - allowOrigin: example2.com
+      allowHeaders: content-type
+      allowMethods: GET, POST
+      exposeHeaders: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
+      allowCredentials: true # 布尔值

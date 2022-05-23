@@ -1,0 +1,5 @@
+[DreamBlog/server]2022/05/23 - 00:00:36.073	[34minfo[0m	E:/coding/go-workspace/DreamBlog/initialize/gorm.go:35	自动建表成功
+[DreamBlog/server]2022/05/23 - 00:00:36.077	[34minfo[0m	E:/coding/go-workspace/DreamBlog/initialize/router.go:30	use middleware logger
+[DreamBlog/server]2022/05/23 - 00:00:36.077	[34minfo[0m	E:/coding/go-workspace/DreamBlog/initialize/router.go:36	register swagger handler
+[DreamBlog/server]2022/05/23 - 00:00:36.078	[34minfo[0m	E:/coding/go-workspace/DreamBlog/initialize/router.go:56	路由注册成功！
+[DreamBlog/server]2022/05/23 - 00:00:36.083	[34minfo[0m	E:/coding/go-workspace/DreamBlog/core/server.go:39	server run success on 	{"address": ":9000"}
