@@ -3,7 +3,7 @@
  * @projectName DreamBlog
  * @author 张涛
  * @version 1.0.0
- * @description TODO
+ * @description casbin 配置文件
  * @createTime 2022年05月03日 00:10:00
  * @lastEditors: 张涛
  * @lastEditTime:
@@ -14,22 +14,3 @@ package config
 type Casbin struct {
 	ModelPath string `mapstructure:"modelPath" json:"modelPath" yaml:"modelPath"` // 存放casbin模型的相对路径
 }
-
-//var Enforcer *casbin.Enforcer
-//
-//func InitCasbin() {
-//	driver := viper.GetString("datasource.driver")
-//	host := viper.GetString("datasource.host")
-//	port := viper.GetString("datasource.port")
-//	user := viper.GetString("datasource.user")
-//	pwd := viper.GetString("datasource.pass")
-//	dbname := viper.GetString("datasource.dbname")
-//	args := fmt.Sprintf("%s:%s@tcp(%s:%s)/", user, pwd, host, port)
-//	a, err := gormadapter.NewAdapter(driver, args, dbname)
-//
-//	logger.PanicError(err, "new adapter", true)
-//	Enforcer, err := casbin.NewEnforcer("casbin.conf", a)
-//	logger.PanicError(err, "new adapter", true)
-//
-//	Enforcer = Enforcer
-//}

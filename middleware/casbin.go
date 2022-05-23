@@ -21,6 +21,10 @@ import (
 
 var casbinService = service.ServiceGroupApp.SystemServiceGroup.CasbinService
 
+// CasbinHandler
+// @Description: casbin拦截器
+// @return gin.HandlerFunc
+//
 func CasbinHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		waitUse, _ := utils.GetClaims(c)

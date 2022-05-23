@@ -13,6 +13,7 @@ package global
 
 import (
 	"dream-blog/config"
+	"github.com/go-redis/redis/v8"
 	"github.com/songzhibin97/gkit/cache/local_cache"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
@@ -27,4 +28,5 @@ var (
 	SYS_LOG               *zap.Logger
 	SysConcurrencyControl = &singleflight.Group{}
 	BlackCache            local_cache.Cache
+	SYS_REDIS             *redis.Client
 )

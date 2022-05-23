@@ -25,3 +25,9 @@ type Register struct {
 	Email    string `form:"email" json:"email" uri:"email" xml:"email" binding:"required"`             // 邮箱
 	NickName string `json:"nickname" gorm:"default:''"`                                                // 昵称
 }
+
+type ChangePasswordStruct struct {
+	Username    string `json:"username"`    // 用户名
+	Password    string `json:"password"`    // 密码
+	NewPassword string `json:"newPassword"` // 新密码
+}

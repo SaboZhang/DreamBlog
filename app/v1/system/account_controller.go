@@ -55,6 +55,9 @@ func (b *BaseApi) Login(ctx *gin.Context) {
 
 }
 
+// signNext
+// @Description: token 签发 🛠️待增加多点登陆token的处理
+//
 func (b *BaseApi) signNext(ctx *gin.Context, user systemResp.RespUser) {
 	j := &utils.JWT{SigningKey: []byte(global.SYS_CONFIG.JWT.SigningKey)} // 唯一签名
 	claims := j.CreateClaims(systemReq.BaseClaims{
@@ -98,4 +101,21 @@ func (b *BaseApi) Register(ctx *gin.Context) {
 	} else {
 		response.Success("注册成功", ctx)
 	}
+}
+
+// ChangePassword
+// @Tags Account
+// @Summary 修改用户密码
+// @Security ApiKeyAuth
+// @Produce application/json
+// @Description: 修改用户密码
+// @Receiver b
+// @Param ctx
+// @Success 200 {object} response.Response{msg=string} "密码修改成功提示"
+// @Router /user/changePassword [post]
+//
+func (b *BaseApi) ChangePassword(ctx *gin.Context) {
+	var user systemReq.ChangePasswordStruct
+	_ = ctx.ShouldBindJSON(&user)
+	// 验证是否符合要求
 }

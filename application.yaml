@@ -62,7 +62,7 @@ recaptchaSettings:
   enabled: true
   headerKey: Google-RecaptchaToken
   minimumScore: 0.5
-  siteKey:
+  siteKey: 
   siteSecret:
   verifyBaseUrl: https://www.recaptcha.net
 # 普通验证码配置
@@ -71,6 +71,11 @@ captcha:
   imgWidth: 240
   imgHeight: 80
   enable: true
+# Redis 配置
+redis:
+  db: 0
+  addr: 127.0.0.1:6379
+  password: ""
 # 跨域配置
 # 需要配合 initialize/router.go#L31 使用
 cors:

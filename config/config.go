@@ -5,7 +5,7 @@
 // @version 1.0.0
 // @createTime 2022年05月04日 20:48:00
 // @lastEditors: 张涛
-// @lastEditTime:
+// @lastEditTime: 2022年5月24日00:20:00
 // 世界上最遥远的距离不是生与死，而是你亲手制造的BUG就在你眼前，你却怎么都找不到她
 // @Copyright (c) 2022 by Rick email: tao993859833@live.cn, All Rights Reserved
 //
@@ -21,5 +21,6 @@ type Server struct {
 	Qiniu             Qiniu     `mapstructure:"qiniu" json:"qiniu" yaml:"qiniu"`                                     // 七牛云配置
 	Cors              CORS      `mapstructure:"cors" json:"cors" yaml:"cors"`                                        // 跨域配置
 	RecaptchaSettings Recaptcha `mapstructure:"recaptchaSettings" json:"recaptchaSettings" yaml:"recaptchaSettings"` // Google人机验证
-	Captcha           Captcha
+	Captcha           Captcha   `mapstructure:"captcha" json:"captcha" yaml:"captcha"`                               // 普通图片验证码配置
+	Redis             Redis     `mapstructure:"redis" json:"redis" yaml:"redis"`                                     // Redis
 }
