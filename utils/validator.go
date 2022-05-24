@@ -23,10 +23,27 @@ type Rules map[string][]string
 
 type RulesMap map[string]Rules
 
+var CustomizeMap = make(map[string]Rules)
+
 func NotEmpty() string {
-	return "not empty"
+	return "notEmpty"
 }
 
+// RegisterRule
+// @Description: 注册自定义规则方案
+//
+func RegisterRule(key string, rule Rules) (err error) {
+	if CustomizeMap[key] != nil {
+		return errors.New(key + "无法重复注册")
+	} else {
+		CustomizeMap[key] = rule
+		return nil
+	}
+}
+
+// Verify
+// @Description: 校验方法
+//
 func Verify(st interface{}, roleMap Rules) (err error) {
 	compareMap := map[string]bool{
 		"lt": true,
@@ -69,6 +86,55 @@ func Verify(st interface{}, roleMap Rules) (err error) {
 		}
 	}
 	return nil
+}
+
+// RegexpMatch
+// @Description: 正则校验 校验输入项是否满足正则表达式
+//
+func RegexpMatch(rule string) string {
+	return "regexp=" + rule
+}
+
+// Lt
+// @Description: 小于入参(<) 如果为string array Slice则为长度比较 如果是 int uint float 则为数值比较
+//
+func Lt(mark string) string {
+	return "lt=" + mark
+}
+
+// Le
+// @Description: 小于等于入参(<=) 如果为string array Slice则为长度比较 如果是 int uint float 则为数值比较
+//
+func Le(mark string) string {
+	return "le=" + mark
+}
+
+// Eq
+// @Description: 等于入参(==) 如果为string array Slice则为长度比较 如果是 int uint float 则为数值比较
+//
+func Eq(mark string) string {
+	return "eq=" + mark
+}
+
+// Ne
+// @Description: 不等于入参 (!=) 如果为string array Slice则为长度比较 如果是 int uint float 则为数值比较
+//
+func Ne(mark string) string {
+	return "ne=" + mark
+}
+
+// Ge
+// @Description: 大于等于入参 (>=) 如果为string array Slice则为长度比较 如果是 int uint float 则为数值比较
+//
+func Ge(mark string) string {
+	return "ge=" + mark
+}
+
+// Gt
+// @Description: 大于入参 (>) 如果为string array Slice则为长度比较 如果是 int uint float 则为数值比较
+//
+func Gt(mark string) string {
+	return "gt=" + mark
 }
 
 // compareVerify

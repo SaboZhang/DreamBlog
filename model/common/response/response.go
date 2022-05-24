@@ -1,6 +1,6 @@
 // Package response
 // @projectName DreamBlog
-// @description TODO
+// @description 成功响应
 // @author 张涛
 // @version 1.0.0
 // @createTime 2022年05月15日 10:51:00
@@ -64,6 +64,10 @@ func FailWithMessage(message string, c *gin.Context) {
 
 func OkWithDetailed(data interface{}, message string, c *gin.Context) {
 	Result(SUCCESS, data, message, c)
+}
+
+func OkWithMessage(message string, c *gin.Context) {
+	Result(SUCCESS, map[string]interface{}{}, message, c)
 }
 
 func Success(message string, c *gin.Context) {

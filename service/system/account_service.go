@@ -90,3 +90,23 @@ func (userService *UserService) Register(u systemReq.Register) (err error, userI
 	}
 	return err, user
 }
+
+func (userService *UserService) ChangePassword(u *systemReq.ChangePasswordStruct) (err error) {
+	var user system.SysUser
+	var ident system.SysUserIdentity
+	err = global.SYS_DB.Where("username = ?", u.Username).First(&user).Error
+	if err != nil {
+		return err
+	}
+	err = global.SYS_DB.Where("create_user_id = ?", user.ID).First(&ident).Error
+	if err != nil {
+		return err
+	}
+	saltPassword := u.Password + user.Salt
+	if ok := utils.BcryptCheck(saltPassword, ident.Credential); !ok {
+		return errors.New("原密码错误")
+	}
+	ident.Credential = utils.BcryptHash(u.NewPassword, user.Salt)
+	err = global.SYS_DB.Save(ident).Error
+	return err
+}

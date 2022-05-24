@@ -30,7 +30,6 @@ type BaseApi struct {
 // Captcha
 // @Tags Account
 // @Summary 获取验证码
-// @Security ApiKeyAuth
 // @Produce application/json
 // @Accept application/json
 // @Description: 获取验证码的base64图片

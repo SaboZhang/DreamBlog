@@ -20,11 +20,20 @@ import (
 	"time"
 )
 
+//type server interface {
+//	ListenAndServeTLS(certFile, keyFile string) error
+//}
+
 type server interface {
 	ListenAndServe() error
 }
 
 func RunWindowsServer() {
+
+	if global.SYS_CONFIG.System.UseRedis {
+		// 初始化Redis
+		initialize.Redis()
+	}
 	// 从db加载jwt数据
 	if global.SYS_DB != nil {
 		system.LoadAll()
@@ -33,6 +42,10 @@ func RunWindowsServer() {
 	Router.Static("/form-generator", "./resource/page")
 
 	address := fmt.Sprintf(":%d", global.SYS_CONFIG.System.Addr)
+	//err := Router.RunTLS(address, "E:\\nginx\\conf.d\\cert\\_.taosugar.com_chain.crt", "E:\\nginx\\conf.d\\cert\\_.taosugar.com_key.key")
+	//if err != nil {
+	//	return
+	//}
 	s := initServer(address, Router)
 	// 保证文本顺序输出
 	time.Sleep(10 * time.Microsecond)
@@ -43,5 +56,7 @@ func RunWindowsServer() {
 	默认自动化文档地址:http://127.0.0.1%s/swagger/index.html
 	默认前端文件运行地址:http://127.0.0.1:9000
 `, address)
+	// https 模式
+	//global.SYS_LOG.Error(s.ListenAndServeTLS("E:\\nginx\\conf.d\\cert\\_.taosugar.com_chain.crt", "E:\\nginx\\conf.d\\cert\\_.taosugar.com_key.key").Error())
 	global.SYS_LOG.Error(s.ListenAndServe().Error())
 }

@@ -59,7 +59,7 @@ qiniu:
 
 # recaptcha 配置
 recaptchaSettings:
-  enabled: true
+  enabled: false
   headerKey: Google-RecaptchaToken
   minimumScore: 0.5
   siteKey: 
@@ -79,7 +79,7 @@ redis:
 # 跨域配置
 # 需要配合 initialize/router.go#L31 使用
 cors:
-  mode: whitelist # 放行模式: allow-all, 放行全部; whitelist, 白名单模式, 来自白名单内域名的请求添加 cors 头; strict-whitelist 严格白名单模式, 白名单外的请求一律拒绝
+  mode: allow-all # 放行模式: allow-all, 放行全部; whitelist, 白名单模式, 来自白名单内域名的请求添加 cors 头; strict-whitelist 严格白名单模式, 白名单外的请求一律拒绝
   whitelist:
     - allowOrigin: example1.com
       allowHeaders: content-type

@@ -24,6 +24,7 @@ func (s *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 	//userRouterWithoutRecord := Router.Group("user")
 	baseApi := v1.ApiGroupApp.SystemAppGroup.BaseApi
 	{
-		userRouter.POST("admin_register", baseApi.Register) // 用户注册路由
+		userRouter.POST("admin_register", baseApi.Register)       // 用户注册路由
+		userRouter.POST("changePassword", baseApi.ChangePassword) // 修改密码路由
 	}
 }

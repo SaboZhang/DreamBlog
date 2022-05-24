@@ -1,4 +1,16 @@
 definitions:
+  request.ChangePasswordStruct:
+    properties:
+      newPassword:
+        description: 新密码
+        type: string
+      password:
+        description: 密码
+        type: string
+      username:
+        description: 用户名
+        type: string
+    type: object
   request.Login:
     properties:
       captcha:
@@ -66,6 +78,9 @@ definitions:
     type: object
 info:
   contact: {}
+  description: DreamBlog Golang 版本swagger
+  title: DreamBlog API Golang
+  version: v1
 paths:
   /base/captcha:
     post:
@@ -85,9 +100,33 @@ paths:
                 msg:
                   type: string
               type: object
+      summary: 获取验证码
+      tags:
+      - Account
+  /user/changePassword:
+    post:
+      parameters:
+      - description: 用户名, 原密码, 新密码
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ChangePasswordStruct'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户修改密码
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
       security:
       - ApiKeyAuth: []
-      summary: 获取验证码
+      summary: 用户修改密码
       tags:
       - Account
   /user/login:
@@ -142,4 +181,9 @@ paths:
       summary: 用户注册
       tags:
       - Account
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

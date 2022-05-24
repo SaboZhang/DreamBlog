@@ -42,14 +42,14 @@ func Routers() *gin.Engine {
 			c.JSON(200, "ok")
 		})
 	}
-	PublicGroup.Use(middleware.RecaptchaVerify())
+	//PublicGroup.Use(middleware.RecaptchaVerify())
 	{
 		systemRouter.InitBaseRouter(PublicGroup) // 注册基础功能路由 不做鉴权
 		//systemRouter.InitInitRouter(PublicGroup) // 自动初始化相关
 	}
 	PrivateGroup := Router.Group("")
 	//PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())
-	PrivateGroup.Use(middleware.RecaptchaVerify()).Use(middleware.CasbinHandler())
+	PrivateGroup.Use(middleware.RecaptchaVerify())
 	{
 		systemRouter.InitUserRouter(PrivateGroup)
 	}

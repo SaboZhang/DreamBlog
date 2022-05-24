@@ -18,6 +18,15 @@ import (
 	"go.uber.org/zap"
 )
 
+// @title DreamBlog API Golang
+// @version v1
+// @description DreamBlog Golang 版本swagger
+// @securityDefinitions.apikey ApiKeyAuth
+// @JWT授权(数据将在请求头中进行传输) 参数结构: "Authorization: {token}"
+// @name Authorization
+// @in header
+// @BasePath /
+//
 func main() {
 	global.SYS_VP = core.Viper() // 初始化Viper
 	global.SYS_LOG = core.Zap()  // 初始化zap日志库

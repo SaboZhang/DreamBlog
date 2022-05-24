@@ -42,7 +42,6 @@ func LoadAll() {
 // IsBlackList
 // @Description: 判断JWT是否属于黑名单
 // @Receiver j
-// @Param jwt string
 // @return bool
 //
 func (jwtService *JwtService) IsBlackList(jwt string) bool {
@@ -53,7 +52,6 @@ func (jwtService *JwtService) IsBlackList(jwt string) bool {
 // GetRedisJWT
 // @Description: 从Redis中获取JWT
 // @Receiver jwtService
-// @Param userName string
 // @return err
 // @return redisJWT
 //
@@ -65,7 +63,6 @@ func (jwtService *JwtService) GetRedisJWT(userName string) (err error, redisJWT 
 // JonsInBlackList
 // @Description: 拉黑jwt
 // @Receiver jwtService
-// @Param jwtList system.BlackRecord
 // @return err
 //
 func (jwtService *JwtService) JonsInBlackList(jwtList system.BlackRecord) (err error) {
@@ -78,11 +75,8 @@ func (jwtService *JwtService) JonsInBlackList(jwtList system.BlackRecord) (err e
 }
 
 // SetRedisJWT
-// @Description: Set RedisJWT
-// @Receiver jwtService
-// @Param jwt string
-// @Param userName string
-// @return err
+//@description: jwt存入redis并设置过期时间
+//@return: err error
 //
 func (jwtService *JwtService) SetRedisJWT(jwt string, userName string) (err error) {
 	// 此处过期时间等于jwt过期时间

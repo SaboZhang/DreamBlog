@@ -94,6 +94,10 @@ func (b *BaseApi) signNext(ctx *gin.Context, user systemResp.RespUser) {
 func (b *BaseApi) Register(ctx *gin.Context) {
 	var r systemReq.Register
 	_ = ctx.ShouldBindJSON(&r)
+	if err := utils.Verify(r, utils.RegisterVerify); err != nil {
+		response.FailWithMessage(err.Error(), ctx)
+		return
+	}
 	err, userReturn := userService.Register(r)
 	if err != nil {
 		global.SYS_LOG.Error("注册失败", zap.Error(err))
@@ -105,17 +109,26 @@ func (b *BaseApi) Register(ctx *gin.Context) {
 
 // ChangePassword
 // @Tags Account
-// @Summary 修改用户密码
+// @Summary 用户修改密码
 // @Security ApiKeyAuth
-// @Produce application/json
-// @Description: 修改用户密码
-// @Receiver b
-// @Param ctx
-// @Success 200 {object} response.Response{msg=string} "密码修改成功提示"
+// @Produce  application/json
+// @Param data body systemReq.ChangePasswordStruct true "用户名, 原密码, 新密码"
+// @Success 200 {object} response.Response{msg=string} "用户修改密码"
 // @Router /user/changePassword [post]
 //
 func (b *BaseApi) ChangePassword(ctx *gin.Context) {
 	var user systemReq.ChangePasswordStruct
 	_ = ctx.ShouldBindJSON(&user)
 	// 验证是否符合要求
+	if err := utils.Verify(user, utils.ChangePasswordVerify); err != nil {
+		response.FailWithMessage(err.Error(), ctx)
+		return
+	}
+	err := userService.ChangePassword(&user)
+	if err != nil {
+		global.SYS_LOG.Error("密码修改失败", zap.Error(err))
+		response.FailWithMessage("原密码错误！", ctx)
+	} else {
+		response.Success("修改成功", ctx)
+	}
 }
