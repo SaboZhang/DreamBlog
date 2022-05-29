@@ -76,3 +76,8 @@
 [DreamBlog/server]2022/05/24 - 23:31:03.039	[34minfo[0m	E:/coding/go-workspace/DreamBlog/initialize/router.go:36	register swagger handler
 [DreamBlog/server]2022/05/24 - 23:31:03.040	[34minfo[0m	E:/coding/go-workspace/DreamBlog/initialize/router.go:56	路由注册成功！
 [DreamBlog/server]2022/05/24 - 23:31:03.054	[34minfo[0m	E:/coding/go-workspace/DreamBlog/core/server.go:48	server run success on 	{"address": ":9000"}
+[DreamBlog/server]2022/05/24 - 23:33:17.845	[34minfo[0m	E:/coding/go-workspace/DreamBlog/initialize/gorm.go:35	自动建表成功
+[DreamBlog/server]2022/05/24 - 23:33:17.848	[34minfo[0m	E:/coding/go-workspace/DreamBlog/initialize/router.go:30	use middleware logger
+[DreamBlog/server]2022/05/24 - 23:33:17.849	[34minfo[0m	E:/coding/go-workspace/DreamBlog/initialize/router.go:36	register swagger handler
+[DreamBlog/server]2022/05/24 - 23:33:17.849	[34minfo[0m	E:/coding/go-workspace/DreamBlog/initialize/router.go:56	路由注册成功！
+[DreamBlog/server]2022/05/24 - 23:33:17.854	[34minfo[0m	E:/coding/go-workspace/DreamBlog/core/server.go:48	server run success on 	{"address": ":9000"}

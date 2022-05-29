@@ -23,10 +23,10 @@ import (
 
 var (
 	SYS_DB                *gorm.DB
+	SYS_REDIS             *redis.Client
 	SYS_CONFIG            config.Server
 	SYS_VP                *viper.Viper
 	SYS_LOG               *zap.Logger
 	SysConcurrencyControl = &singleflight.Group{}
 	BlackCache            local_cache.Cache
-	SYS_REDIS             *redis.Client
 )

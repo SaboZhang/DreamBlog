@@ -17,8 +17,10 @@ import (
 	"flag"
 	"fmt"
 	"github.com/fsnotify/fsnotify"
+	"github.com/songzhibin97/gkit/cache/local_cache"
 	"github.com/spf13/viper"
 	"os"
+	"time"
 )
 
 func Viper(path ...string) *viper.Viper {
@@ -59,5 +61,9 @@ func Viper(path ...string) *viper.Viper {
 	if err := v.Unmarshal(&global.SYS_CONFIG); err != nil {
 		fmt.Println(err)
 	}
+	// 初始化緩存
+	global.BlackCache = local_cache.NewCache(
+		local_cache.SetDefaultExpire(time.Second * time.Duration(global.SYS_CONFIG.JWT.ExpiresTime)),
+	)
 	return v
 }

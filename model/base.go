@@ -28,11 +28,11 @@ type UserBaseModel struct {
 }
 
 type BaseUUID struct {
-	ID uuid.UUID `gorm:"type:char(36);primarykey;comment:'主键Id'"`
+	ID uuid.UUID `gorm:"type:char(36);primarykey;comment:主键Id"`
 }
 
 type BaseId struct {
-	ID uint64 `gorm:"primarykey;comment:'主键Id'"`
+	ID uint64 `gorm:"primarykey;comment:主键Id"`
 }
 
 // BeforeCreate

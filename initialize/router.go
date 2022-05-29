@@ -27,6 +27,9 @@ func Routers() *gin.Engine {
 	systemRouter := routes.RouterGroupApp.System
 
 	Router.StaticFS(global.SYS_CONFIG.Local.Path, http.Dir(global.SYS_CONFIG.Local.Path)) // 为用户头像和文件提供静态地址
+	if global.SYS_CONFIG.System.UseTls {
+		Router.Use(middleware.TlsMode()) // 使用https模式
+	}
 	global.SYS_LOG.Info("use middleware logger")
 	// 跨域，如需跨域可以打开下面的注释
 	// Router.Use(middleware.Cors()) // 直接放行全部跨域请求

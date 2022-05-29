@@ -14,10 +14,12 @@ package system
 import (
 	"dream-blog/global"
 	"dream-blog/model/common/response"
+	"dream-blog/model/system"
 	systemReq "dream-blog/model/system/request"
 	systemResp "dream-blog/model/system/response"
 	"dream-blog/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v8"
 	"go.uber.org/zap"
 )
 
@@ -56,7 +58,7 @@ func (b *BaseApi) Login(ctx *gin.Context) {
 }
 
 // signNext
-// @Description: token 签发 🛠️待增加多点登陆token的处理
+// @Description: token 签发
 //
 func (b *BaseApi) signNext(ctx *gin.Context, user systemResp.RespUser) {
 	j := &utils.JWT{SigningKey: []byte(global.SYS_CONFIG.JWT.SigningKey)} // 唯一签名
@@ -73,11 +75,50 @@ func (b *BaseApi) signNext(ctx *gin.Context, user systemResp.RespUser) {
 		response.FailWithMessage("获取token失败", ctx)
 		return
 	}
-	response.OkWithDetailed(systemResp.LoginResponse{
-		AccessToken:  token,
-		RefreshToken: user.RefreshToken,
-		ExpiresAt:    claims.ExpiresAt.Unix()},
-		"登陆成功", ctx)
+	if !global.SYS_CONFIG.System.UseMultipoint {
+		response.OkWithDetailed(systemResp.LoginResponse{
+			AccessToken:  token,
+			RefreshToken: user.RefreshToken,
+			ExpiresAt:    claims.ExpiresAt.Unix() * 1000},
+			"登陆成功", ctx)
+		return
+	}
+	// 多点登陆验证
+	if err, jwtStr := jwtService.GetRedisJWT(user.Username); err == redis.Nil {
+		if err := jwtService.SetRedisJWT(token, user.Username); err != nil {
+			global.SYS_LOG.Error("设置登陆状态失败！", zap.Error(err))
+			response.FailWithMessage("设置登陆状态失败", ctx)
+			return
+		}
+		response.OkWithDetailed(systemResp.LoginResponse{
+			AccessToken:  token,
+			RefreshToken: user.RefreshToken,
+			ExpiresAt:    claims.ExpiresAt.Unix() * 1000},
+			"登陆成功", ctx)
+	} else if err != nil {
+		global.SYS_LOG.Error("设置登陆状态失败！", zap.Error(err))
+		response.FailWithMessage("设置登陆状态失败", ctx)
+	} else {
+		var blackJWT system.BlackRecord
+		blackJWT.Jti = jwtStr
+		blackJWT.CreateUserId = user.ID
+		blackJWT.UserName = user.Username
+		if err := jwtService.JonsInBlackList(blackJWT); err != nil {
+			response.FailWithMessage("JWT作废", ctx)
+			return
+		}
+		if err := jwtService.SetRedisJWT(token, user.Username); err != nil {
+			global.SYS_LOG.Error("设置登陆状态失败！", zap.Error(err))
+			response.FailWithMessage("设置登陆状态失败", ctx)
+			return
+		}
+		response.OkWithDetailed(systemResp.LoginResponse{
+			AccessToken:  token,
+			RefreshToken: user.RefreshToken,
+			ExpiresAt:    claims.ExpiresAt.Unix() * 1000},
+			"登陆成功", ctx)
+	}
+
 }
 
 // Register

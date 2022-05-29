@@ -20,8 +20,8 @@ type BlackRecord struct {
 	model.BaseUUID
 	Jti          string    `gorm:"type:text;comment:jwt"`
 	UserName     string    `gorm:"type:varchar(50);comment:用户名"`
-	CreateUserId int64     `gorm:"comment:创建人"`
-	CreateTime   time.Time `gorm:"comment:创建时间"`
+	CreateUserId uint64    `gorm:"comment:创建人"`
+	CreateTime   time.Time `gorm:"type:datetime;default:NOW();comment:创建时间"`
 }
 
 // TableName

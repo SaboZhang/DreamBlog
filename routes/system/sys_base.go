@@ -12,7 +12,7 @@
 package system
 
 import (
-	v1 "dream-blog/app/v1"
+	v1 "dream-blog/controller/v1"
 	"github.com/gin-gonic/gin"
 )
 

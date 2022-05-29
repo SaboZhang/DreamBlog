@@ -20,4 +20,7 @@ type System struct {
 	UseRedis      bool   `mapstructure:"useRedis" json:"useRedis" yaml:"useRedis"`                // 使用redis
 	LimitCountIP  int    `mapstructure:"iplimitCount" json:"iplimitCount" yaml:"iplimitCount"`
 	LimitTimeIP   int    `mapstructure:"iplimitTime" json:"iplimitTime" yaml:"iplimitTime"`
+	UseTls        bool   `mapstructure:"useTls" json:"useTls" yaml:"useTls"`
+	CertFile      string `mapstructure:"certFile" json:"certFile" yaml:"certFile"`
+	KeyFile       string `mapstructure:"keyFile" json:"keyFile" yaml:"keyFile"`
 }

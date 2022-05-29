@@ -20,17 +20,13 @@ import (
 	"time"
 )
 
-//type server interface {
-//	ListenAndServeTLS(certFile, keyFile string) error
-//}
-
 type server interface {
 	ListenAndServe() error
 }
 
 func RunWindowsServer() {
 
-	if global.SYS_CONFIG.System.UseRedis {
+	if global.SYS_CONFIG.System.UseRedis || global.SYS_CONFIG.System.UseMultipoint {
 		// 初始化Redis
 		initialize.Redis()
 	}
@@ -42,10 +38,6 @@ func RunWindowsServer() {
 	Router.Static("/form-generator", "./resource/page")
 
 	address := fmt.Sprintf(":%d", global.SYS_CONFIG.System.Addr)
-	//err := Router.RunTLS(address, "E:\\nginx\\conf.d\\cert\\_.taosugar.com_chain.crt", "E:\\nginx\\conf.d\\cert\\_.taosugar.com_key.key")
-	//if err != nil {
-	//	return
-	//}
 	s := initServer(address, Router)
 	// 保证文本顺序输出
 	time.Sleep(10 * time.Microsecond)
@@ -53,10 +45,16 @@ func RunWindowsServer() {
 	fmt.Printf(`
 	欢迎使用DreamBlog
 	当前版本v1.0.0
-	默认自动化文档地址:http://127.0.0.1%s/swagger/index.html
-	默认前端文件运行地址:http://127.0.0.1:9000
+	默认自动化文档地址:http(s)://127.0.0.1%s/swagger/index.html
+	默认前端文件运行地址:http://127.0.0.1:8088
 `, address)
 	// https 模式
-	//global.SYS_LOG.Error(s.ListenAndServeTLS("E:\\nginx\\conf.d\\cert\\_.taosugar.com_chain.crt", "E:\\nginx\\conf.d\\cert\\_.taosugar.com_key.key").Error())
+	if global.SYS_CONFIG.System.UseTls {
+		err := Router.RunTLS(address, global.SYS_CONFIG.System.CertFile, global.SYS_CONFIG.System.KeyFile)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+	}
 	global.SYS_LOG.Error(s.ListenAndServe().Error())
 }

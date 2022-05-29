@@ -85,6 +85,7 @@ require (
 	github.com/swaggo/swag v1.8.2 // indirect
 	github.com/thinkeridea/go-extend v1.3.2 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
+	github.com/unrolled/secure v1.10.0 // indirect
 	github.com/urfave/cli/v2 v2.7.1 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.8.0 // indirect

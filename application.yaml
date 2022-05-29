@@ -3,17 +3,21 @@ server:
   port: 9000
   env: 'develop'  # Change to "develop" to skip authentication for development mode
   ossType: 'local'    # 控制oss选择走本地还是 七牛等其他仓 自行增加其他oss仓可以在 server/utils/upload/upload.go 中 NewOss函数配置
-  useRedis: false     # 使用redis
-  useMultipoint: false
+  useRedis: true     # 使用redis
+  useMultipoint: true
   # IP限制次数 一个小时15000次
   iplimitCount: 15000
   #  IP限制一个小时
   iplimitTime: 3600
+  # https的配置
+  useTls: false
+  certFile: .
+  keyFile: .
 # MySQL数据库配置
 connection:
   host: 127.0.0.1
   port: 3306
-  config: 'parseTime=True'
+  config: 'charset=utf8mb4&parseTime=True&loc=Local'
   dbName: go
   username: root
   password: admin123
@@ -73,8 +77,8 @@ captcha:
   enable: true
 # Redis 配置
 redis:
-  db: 0
-  addr: 127.0.0.1:6379
+  db: 10
+  addr: 192.168.3.12:6379
   password: ""
 # 跨域配置
 # 需要配合 initialize/router.go#L31 使用
