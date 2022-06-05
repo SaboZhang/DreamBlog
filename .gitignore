@@ -2,4 +2,6 @@
 .vscode
 /src/logs
 /pkg
+/pkg/mod
+/pkg/sumdb
 /bin
