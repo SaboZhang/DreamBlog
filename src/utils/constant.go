@@ -12,6 +12,6 @@
 package utils
 
 const (
-	ConfigEnv  = "SysConfig"
-	ConfigFile = "application.yaml"
+	ConfigEnv  = "SYS_CONFIG"
+	ConfigFile = "src/application.yaml"
 )
