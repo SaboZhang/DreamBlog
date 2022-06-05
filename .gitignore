@@ -1,3 +1,5 @@
 /.idea
 .vscode
-/logs
+/src/logs
+/pkg
+/bin
