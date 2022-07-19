@@ -26,3 +26,16 @@ func GetClaims(ctx *gin.Context) (*systemReq.CustomClaims, error) {
 	}
 	return claims, err
 }
+
+func GetUserID(ctx *gin.Context) uint64 {
+	if claims, exists := ctx.Get("claims"); !exists {
+		if cl, err := GetClaims(ctx); err != nil {
+			return 0
+		} else {
+			return cl.Id
+		}
+	} else {
+		waitUse := claims.(*systemReq.CustomClaims)
+		return waitUse.Id
+	}
+}

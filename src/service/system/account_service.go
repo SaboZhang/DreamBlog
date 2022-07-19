@@ -39,7 +39,7 @@ func (userService *UserService) Login(u systemReq.Login) (err error, userInter *
 	}
 	var user system.SysUser
 	var ident system.SysUserIdentity
-	err = global.SYS_DB.Where("username = ?", u.Username).First(&user).Error
+	err = global.SYS_DB.Preload("SysUserIdentity").First(&user).Error
 	if err == nil {
 		saltPassword := u.Password + user.Salt
 		global.SYS_DB.Where("create_user_id = ?", user.ID).First(&ident)
@@ -49,7 +49,8 @@ func (userService *UserService) Login(u systemReq.Login) (err error, userInter *
 	}
 	refers := utils.AddRefreshToken()
 	user.RefreshToken = refers
-	user.LastLoginTime = time.Now()
+	loginTime := time.Now()
+	user.LastLoginTime = &loginTime
 	global.SYS_DB.Save(&user)
 	var res systemResp.RespUser
 	res.ID = user.ID
@@ -70,7 +71,7 @@ func (userService *UserService) Login(u systemReq.Login) (err error, userInter *
 //
 func (userService *UserService) Register(u systemReq.Register) (err error, userInter system.SysUser) {
 	var user system.SysUser
-	var ident system.SysUserIdentity
+	//var ident system.SysUserIdentity
 	if errors.Is(global.SYS_DB.Where("username = ?", u.Username).First(&user).Error, gorm.ErrRecordNotFound) { // 判断用户名是否注册
 		return errors.New("用户名已注册"), userInter
 	}
@@ -80,14 +81,14 @@ func (userService *UserService) Register(u systemReq.Register) (err error, userI
 	user.Salt = salt
 	user.Nickname = u.NickName
 	user.Email = u.Email
-	ident.Credential = utils.BcryptHash(u.Password, salt)
-	ident.IdentityType = "Password"
-	ident.Identifier = u.Username
+	user.SysUserIdentity.Credential = utils.BcryptHash(u.Password, salt)
+	user.SysUserIdentity.IdentityType = "Password"
+	user.SysUserIdentity.Identifier = u.Username
 	err = global.SYS_DB.Create(&user).Error
-	if err == nil {
-		ident.Base.CreateUserId = user.ID
-		err = global.SYS_DB.Create(&ident).Error
-	}
+	//if err == nil {
+	//	ident.CreateUserId = user.ID
+	//	err = global.SYS_DB.Create(&ident).Error
+	//}
 	return err, user
 }
 

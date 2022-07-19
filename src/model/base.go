@@ -12,6 +12,7 @@
 package model
 
 import (
+	"database/sql/driver"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"time"
@@ -43,4 +44,26 @@ type BaseId struct {
 func (u *BaseUUID) BeforeCreate(tx *gorm.DB) (err error) {
 	u.ID = uuid.New()
 	return
+}
+
+type CusBoolean bool
+
+func (b CusBoolean) Value() (driver.Value, error) {
+	result := make([]byte, 1)
+	if b {
+		result[0] = byte(1)
+	} else {
+		result[0] = 0
+	}
+	return result, nil
+}
+
+func (b CusBoolean) Scan(v interface{}) error {
+	bytes := v.([]byte)
+	if bytes[0] == 0 {
+		b = false
+	} else {
+		b = true
+	}
+	return nil
 }

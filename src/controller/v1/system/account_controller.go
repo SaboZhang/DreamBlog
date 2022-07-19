@@ -64,7 +64,7 @@ func (b *BaseApi) signNext(ctx *gin.Context, user systemResp.RespUser) {
 	j := &utils.JWT{SigningKey: []byte(global.SYS_CONFIG.JWT.SigningKey)} // 唯一签名
 	claims := j.CreateClaims(systemReq.BaseClaims{
 		UUID:     user.UUID,
-		ID:       user.ID,
+		Id:       user.ID,
 		Username: user.Username,
 		NickName: user.Nickname,
 		Email:    user.Email,
