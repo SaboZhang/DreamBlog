@@ -1,0 +1,7 @@
+User-agent: *   (头部标准)
+Allow: /        （允许全部搜索引擎捉取）
+User-agent: Googlebot (谷歌蜘蛛)
+Disallow:       （默认捉取）
+User-agent: Baiduspider (百度蜘蛛)
+Disallow: /      （禁止捉取）
+Sitemap: https://www.l.cn/sitemap.xml  （站点地图）

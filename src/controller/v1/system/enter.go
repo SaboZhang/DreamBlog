@@ -18,7 +18,7 @@ type AppGroup struct {
 }
 
 var (
-	userService   = service.ServiceGroupApp.SystemServiceGroup.UserService
-	casbinService = service.ServiceGroupApp.SystemServiceGroup.CasbinService
-	jwtService    = service.ServiceGroupApp.SystemServiceGroup.JwtService
+	userService   = service.GroupApp.SystemServiceGroup.UserService
+	casbinService = service.GroupApp.SystemServiceGroup.CasbinService
+	jwtService    = service.GroupApp.SystemServiceGroup.JwtService
 )

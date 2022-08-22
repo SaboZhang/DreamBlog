@@ -45,7 +45,8 @@ func (b *BaseApi) Login(ctx *gin.Context) {
 	}
 	if store.Verify(l.CaptchaId, l.Captcha, true) || !global.SYS_CONFIG.Captcha.Enable {
 		if err, user := userService.Login(l); err != nil {
-			global.SYS_LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
+			global.SYS_LOG.Error("登陆失败! 用户名不存在或者密码错误!",
+				zap.String("method", ctx.Request.Method), zap.Any("post", l), zap.String("api", ctx.Request.URL.Path), zap.Error(err))
 			response.FailWithMessage("用户名不存在或者密码错误", ctx)
 		} else {
 			// 签发token

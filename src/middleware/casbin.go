@@ -19,7 +19,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var casbinService = service.ServiceGroupApp.SystemServiceGroup.CasbinService
+var casbinService = service.GroupApp.SystemServiceGroup.CasbinService
 
 // CasbinHandler
 // @Description: casbin拦截器

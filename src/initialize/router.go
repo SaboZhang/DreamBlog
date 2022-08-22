@@ -24,9 +24,12 @@ import (
 
 func Routers() *gin.Engine {
 	Router := gin.Default()
+	Router.Use(middleware.GinLogger(), middleware.GinRecoveryLogger(true))
 	systemRouter := routes.RouterGroupApp.System
 
 	Router.StaticFS(global.SYS_CONFIG.Local.Path, http.Dir(global.SYS_CONFIG.Local.Path)) // 为用户头像和文件提供静态地址
+	// 服务单个静态文件
+	Router.StaticFile("/robots.txt", "./src/resource/robots.txt")
 	if global.SYS_CONFIG.System.UseTls {
 		Router.Use(middleware.TlsMode()) // 使用https模式
 	}

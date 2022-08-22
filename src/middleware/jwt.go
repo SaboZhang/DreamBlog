@@ -24,7 +24,7 @@ import (
 	"time"
 )
 
-var jwtService = service.ServiceGroupApp.SystemServiceGroup.JwtService
+var jwtService = service.GroupApp.SystemServiceGroup.JwtService
 
 func JWTAuth() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
